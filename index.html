@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Science & Math Learning Hub</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Orbitron:wght@400;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --math: #3498db;
+            --chem: #e74c3c;
+            --physics: #2ecc71;
+            --bio: #9b59b6;
+            --dark: #0f172a;
+            --darker: #0a0f1f;
+            --accent: #ff6b6b;
+            --light: #f8f9fa;
+            --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(135deg, var(--darker), var(--dark));
+            color: var(--light);
+            min-height: 100vh;
+            font-family: 'Poppins', sans-serif;
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* Animated Background */
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            animation: float 15s infinite linear;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0) translateX(0) rotate(0deg); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-100vh) translateX(100px) rotate(360deg); opacity: 0; }
+        }
+
+        /* Header with Parallax Effect */
+        header {
+            background: linear-gradient(to bottom, rgba(15, 23, 42, 0.9), rgba(10, 15, 31, 0.7));
+            padding: 1.5rem;
+            text-align: center;
+            position: relative;
+            backdrop-filter: blur(10px);
+            z-index: 10;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .logo {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 10px;
+            perspective: 1000px;
+        }
+
+        .logo-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--physics), var(--math));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            animation: rotate 20s linear infinite;
+            box-shadow: 0 0 30px rgba(46, 204, 113, 0.5);
+        }
+
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            font-family: 'Orbitron', sans-serif;
+            background: linear-gradient(to right, var(--math), var(--physics), var(--chem), var(--bio));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 0.5rem;
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+            letter-spacing: 2px;
+            animation: glow 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            0% { text-shadow: 0 0 10px rgba(52, 152, 219, 0.5); }
+            25% { text-shadow: 0 0 15px rgba(46, 204, 113, 0.6); }
+            50% { text-shadow: 0 0 20px rgba(231, 76, 60, 0.7); }
+            75% { text-shadow: 0 0 25px rgba(155, 89, 182, 0.8); }
+            100% { text-shadow: 0 0 30px rgba(255, 107, 107, 0.9); }
+        }
+
+        .tagline {
+            font-size: 1.3rem;
+            color: #cbd5e1;
+            max-width: 800px;
+            margin: 0 auto;
+            font-weight: 300;
+            letter-spacing: 1px;
+        }
+
+        /* Hero Section with Parallax */
+        .hero {
+            text-align: center;
+            padding: 8rem 2rem 6rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, rgba(46, 204, 113, 0.1) 0%, transparent 70%);
+            z-index: -1;
+        }
+
+        .hero h2 {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            color: var(--light);
+            font-family: 'Montserrat', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            max-width: 800px;
+            margin: 0 auto 2rem;
+            color: #e2e8f0;
+            animation: fadeInUp 1.2s ease-out;
+        }
+
+        /* Subject Cards with 3D Effect */
+        .subjects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+            perspective: 1500px;
+        }
+
+        .subject-card {
+            background: linear-gradient(145deg, rgba(30, 41, 59, 0.8), rgba(15, 23, 42, 0.9));
+            border-radius: 20px;
+            padding: 2.5rem;
+            text-align: center;
+            transition: var(--transition);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            position: relative;
+            overflow: hidden;
+            transform-style: preserve-3d;
+            transform: translateZ(0);
+        }
+
+        .subject-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            transform: rotate(30deg);
+            transition: var(--transition);
+            opacity: 0.3;
+        }
+
+        .subject-card:hover {
+            transform: translateY(-15px) rotateX(5deg) rotateY(5deg);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.6);
+        }
+
+        .subject-card:hover::before {
+            transform: rotate(45deg);
+            opacity: 0.5;
+        }
+
+        .subject-card.math {
+            border-top: 5px solid var(--math);
+        }
+        
+        .subject-card.chemistry {
+            border-top: 5px solid var(--chem);
+        }
+        
+        .subject-card.physics {
+            border-top: 5px solid var(--physics);
+        }
+        
+        .subject-card.biology {
+            border-top: 5px solid var(--bio);
+        }
+
+        .subject-card.math:hover {
+            box-shadow: 0 25px 50px rgba(52, 152, 219, 0.3);
+        }
+        
+        .subject-card.chemistry:hover {
+            box-shadow: 0 25px 50px rgba(231, 76, 60, 0.3);
+        }
+        
+        .subject-card.physics:hover {
+            box-shadow: 0 25px 50px rgba(46, 204, 113, 0.3);
+        }
+        
+        .subject-card.biology:hover {
+            box-shadow: 0 25px 50px rgba(155, 89, 182, 0.3);
+        }
+
+        .subject-icon {
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+            transition: var(--transition);
+        }
+
+        .subject-card:hover .subject-icon {
+            transform: scale(1.2) translateY(-10px);
+        }
+
+        .math .subject-icon {
+            color: var(--math);
+            text-shadow: 0 0 20px rgba(52, 152, 219, 0.5);
+        }
+        
+        .chemistry .subject-icon {
+            color: var(--chem);
+            text-shadow: 0 0 20px rgba(231, 76, 60, 0.5);
+        }
+        
+        .physics .subject-icon {
+            color: var(--physics);
+            text-shadow: 0 0 20px rgba(46, 204, 113, 0.5);
+        }
+        
+        .biology .subject-icon {
+            color: var(--bio);
+            text-shadow: 0 0 20px rgba(155, 89, 182, 0.5);
+        }
+
+        .subject-card h3 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            font-family: 'Montserrat', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .subject-card p {
+            color: #cbd5e1;
+            margin-bottom: 2rem;
+            flex-grow: 1;
+            font-size: 1.1rem;
+        }
+
+        /* Feature Highlights */
+        .features {
+            max-width: 1400px;
+            margin: 5rem auto;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .features h2 {
+            font-size: 2.8rem;
+            margin-bottom: 3rem;
+            color: var(--light);
+            text-align: center;
+            font-family: 'Montserrat', sans-serif;
+            position: relative;
+            display: inline-block;
+        }
+
+        .features h2::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(to right, var(--math), var(--bio));
+            border-radius: 2px;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 3rem;
+        }
+
+        .feature-card {
+            background: rgba(30, 41, 59, 0.7);
+            padding: 2.5rem;
+            border-radius: 20px;
+            text-align: center;
+            transition: var(--transition);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+            transform: translateY(0);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(to right, var(--physics), var(--chem));
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.5s ease;
+        }
+
+        .feature-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .feature-card i {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--accent);
+            transition: var(--transition);
+        }
+
+        .feature-card:hover i {
+            transform: rotate(10deg) scale(1.2);
+            color: var(--physics);
+        }
+
+        .feature-card h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            color: var(--light);
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .feature-card p {
+            color: #cbd5e1;
+            font-size: 1.1rem;
+        }
+
+        /* Buttons with Gradient and Animation */
+        .btn {
+            display: inline-block;
+            padding: 14px 35px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            font-size: 1.1rem;
+            border: none;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            transition: var(--transition);
+        }
+
+        .math .btn::before {
+            background: linear-gradient(45deg, var(--math), #1a56db);
+        }
+        
+        .chemistry .btn::before {
+            background: linear-gradient(45deg, var(--chem), #c53030);
+        }
+        
+        .physics .btn::before {
+            background: linear-gradient(45deg, var(--physics), #1a9f53);
+        }
+        
+        .biology .btn::before {
+            background: linear-gradient(45deg, var(--bio), #6b46c1);
+        }
+
+        .btn span {
+            position: relative;
+            z-index: 2;
+            color: white;
+        }
+
+        .btn::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: 0.5s;
+        }
+
+        .btn:hover::after {
+            left: 100%;
+        }
+
+        .btn:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+        }
+
+        /* Footer with Wave Animation */
+        footer {
+            background: linear-gradient(to top, var(--darker), var(--dark));
+            padding: 5rem 2rem 2rem;
+            text-align: center;
+            margin-top: 5rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        footer::before {
+            content: '';
+            position: absolute;
+            top: -60px;
+            left: 0;
+            width: 100%;
+            height: 60px;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="%230f172a" fill-opacity="1" d="M0,160L48,149.3C96,139,192,117,288,128C384,139,480,181,576,197.3C672,213,768,203,864,181.3C960,160,1056,128,1152,117.3C1248,107,1344,117,1392,122.7L1440,128L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            text-align: left;
+        }
+
+        .footer-section h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            color: var(--physics);
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .footer-section h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background: var(--accent);
+            border-radius: 2px;
+        }
+
+        .footer-section p {
+            color: #cbd5e1;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .copyright {
+            margin-top: 4rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #94a3b8;
+            font-size: 1.1rem;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            h1 {
+                font-size: 2.8rem;
+            }
+            
+            .hero h2 {
+                font-size: 2.5rem;
+            }
+            
+            .subject-card, .feature-card {
+                padding: 2rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.3rem;
+            }
+            
+            .hero {
+                padding: 6rem 1.5rem 4rem;
+            }
+            
+            .hero h2 {
+                font-size: 2rem;
+            }
+            
+            .tagline {
+                font-size: 1.1rem;
+            }
+            
+            .features h2 {
+                font-size: 2.2rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .logo-icon {
+                width: 60px;
+                height: 60px;
+                font-size: 2rem;
+            }
+            
+            .hero h2 {
+                font-size: 1.8rem;
+            }
+            
+            .hero p {
+                font-size: 1.1rem;
+            }
+            
+            .subject-card h3, .feature-card h3 {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Animated Background Particles -->
+    <div class="bg-animation" id="particles"></div>
+    
+    <header>
+        <div class="logo">
+            <div class="logo-icon">
+                <i class="fas fa-atom"></i>
+            </div>
+            <div>
+                <h1>Science & Math Learning Hub</h1>
+                <p class="tagline">Created by students, for students - Your gateway to mastering STEM subjects</p>
+            </div>
+        </div>
+    </header>
+    
+    <section class="hero">
+        <h2>Discover the World of Science and Math</h2>
+        <p>Explore comprehensive resources developed by fellow students. Each specialized website contains study guides, practice questions, and profiles of famous scientists to help you excel.</p>
+    </section>
+    
+    <div class="subjects-grid">
+        <div class="subject-card math">
+            <i class="fas fa-calculator subject-icon"></i>
+            <h3>Mathematics</h3>
+            <p>Master algebra, calculus, geometry, and statistics with our comprehensive guides and practice problems. Perfect for students at all levels.</p>
+            <a href="https://willowy-salamander-45268f.netlify.app/#home-page" class="btn"><span>Explore Math</span></a>
+        </div>
+        
+        <div class="subject-card chemistry">
+            <i class="fas fa-flask subject-icon"></i>
+            <h3>Chemistry</h3>
+            <p>Dive into atomic structures, chemical reactions, and organic chemistry with interactive content and study guides.</p>
+            <a href="https://tiny-biscuit-4265b5.netlify.app/" class="btn"><span>Explore Chemistry</span></a>
+        </div>
+        
+        <div class="subject-card physics">
+            <i class="fas fa-atom subject-icon"></i>
+            <h3>Physics</h3>
+            <p>Understand the laws of motion, energy, electricity, and modern physics with clear explanations and practice problems.</p>
+            <a href="https://gentle-pixie-bf99fb.netlify.app/" class="btn"><span>Explore Physics</span></a>
+        </div>
+        
+        <div class="subject-card biology">
+            <i class="fas fa-dna subject-icon"></i>
+            <h3>Biology</h3>
+            <p>Explore cell biology, genetics, evolution, and human anatomy with detailed study materials and visual guides.</p>
+            <a href="https://statuesque-cranachan-dad9f7.netlify.app/" class="btn"><span>Explore Biology</span></a>
+        </div>
+    </div>
+    
+    <section class="features">
+        <h2>What You'll Discover</h2>
+        <div class="features-grid">
+            <div class="feature-card">
+                <i class="fas fa-book-open"></i>
+                <h3>Comprehensive Study Guides</h3>
+                <p>Step-by-step learning paths for each topic, created by students who've mastered the material.</p>
+            </div>
+            
+            <div class="feature-card">
+                <i class="fas fa-pencil-alt"></i>
+                <h3>Practice Questions</h3>
+                <p>Test your knowledge with hundreds of practice problems and detailed solutions.</p>
+            </div>
+            
+            <div class="feature-card">
+                <i class="fas fa-user-graduate"></i>
+                <h3>Famous Scientists</h3>
+                <p>Learn about groundbreaking researchers and their contributions to science and math.</p>
+            </div>
+            
+            <div class="feature-card">
+                <i class="fas fa-users"></i>
+                <h3>By Students, For Students</h3>
+                <p>Resources developed by peers who understand the challenges of learning complex subjects.</p>
+            </div>
+        </div>
+    </section>
+    
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>About This Hub</h3>
+                <p>The Science & Math Learning Hub connects students with specialized resources for core STEM subjects. All content created by students for students.</p>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Subject Resources</h3>
+                <p>Mathematics: Algebra, Calculus, Statistics</p>
+                <p>Chemistry: Organic, Inorganic, Physical</p>
+                <p>Physics: Mechanics, Electromagnetism, Modern</p>
+                <p>Biology: Genetics, Ecology, Anatomy</p>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Start Learning</h3>
+                <p>Select a subject above to access specialized resources. Everything is free and available anytime.</p>
+            </div>
+        </div>
+        
+        <div class="copyright">
+            <p>&copy; 2025 Science & Math Learning Hub. Created by students for students.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Create animated background particles
+        document.addEventListener('DOMContentLoaded', function() {
+            const particlesContainer = document.getElementById('particles');
+            const particleCount = 30;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+                
+                // Random size and position
+                const size = Math.random() * 30 + 10;
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                particle.style.left = `${Math.random() * 100}%`;
+                particle.style.top = `${Math.random() * 100}%`;
+                
+                // Random animation duration
+                const duration = Math.random() * 20 + 10;
+                particle.style.animationDuration = `${duration}s`;
+                
+                // Random delay
+                const delay = Math.random() * 5;
+                particle.style.animationDelay = `${delay}s`;
+                
+                particlesContainer.appendChild(particle);
+            }
+            
+            // Add subtle hover effect to cards
+            const cards = document.querySelectorAll('.subject-card');
+            cards.forEach(card => {
+                card.addEventListener('mousemove', (e) => {
+                    const rect = card.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    
+                    const centerX = rect.width / 2;
+                    const centerY = rect.height / 2;
+                    
+                    const angleY = (x - centerX) / 25;
+                    const angleX = (centerY - y) / 25;
+                    
+                    card.style.transform = `perspective(1000px) rotateX(${angleX}deg) rotateY(${angleY}deg) translateZ(20px)`;
+                });
+                
+                card.addEventListener('mouseleave', () => {
+                    card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) translateZ(0)';
+                });
+            });
+        });
+    </script>
+</body>
+</html>
